@@ -11,6 +11,11 @@ export default {
     return {
       service: new PopulationService()
     }
+  },
+  provide() {
+    return {
+      service: this.service
+    }
   }
 }
 </script>
