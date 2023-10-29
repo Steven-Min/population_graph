@@ -21,3 +21,15 @@ npm run build
 ```
 
 ## 実装のTODOs
+- 全体的な`Service`を作る
+  - [ ] 名前は`PopulationService`とする
+    - [ ] props
+      - [ ] `prefectures`
+      - [ ] `selectedPrefectures`
+      - [ ] `graphData`
+    - [ ] constructorの際に都道府県を取得しておく
+      - [ ] `prefectures`に格納する
+    - [ ] 選択した都道府県を`selectedPrefectures`に格納する
+    - [ ] 選択した都道府県に対して、人口推移グラフのデータを取得する
+      - [ ] `graphData`に格納する
+- ヘッダーのタイトル部分をコンポーネントとして作る
