@@ -1,35 +1,185 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
   font-weight: normal;
 }
 
-a,
-.green {
+a {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.app-form-control {
+  border: 1px solid var(--color-border-2);
+  border-radius: 10px;
+  background-color: var(--color-background);
+  padding: 15px;
+  height: 48px;
+}
+.app-form-control:disabled {
+  background-color: #cccccc;
+}
+.app-form-control::placeholder {
+  color: var(--color-placeholder);
+}
+.app-from-control-group {
+  vertical-align: baseline;
+}
+.app-from-control-prefix {
+  font-size: 18px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.app-from-control-suffix {
+  font-size: 18px;
+  vertical-align: bottom;
+  margin-left: 10px;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+.app-btn {
+  color: var(--color-background);
+  background-color: var(--color-background-3);
+  border: 1px solid var(--color-background-3);
+  border-radius: 7px;
+  font-size: 14px;
+  line-height: 18px;
+  width: 80px;
+  text-align: center;
+  padding: 14px;
+  cursor: pointer;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.app-btn.app-btn-danger {
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.app-btn.app-outline-btn {
+  color: var(--color-background-3);
+  background-color: transparent;
+  border-color: var(--color-background-3);
+}
+
+.app-btn-2 {
+  text-align: center;
+  font-size: 16px;
+  line-height: 36px;
+  color: var(--color-background);
+  border: none;
+  border-radius: 40px;
+  background-color: var(--color-background-3);
+  padding: 14px;
+  cursor: pointer;
+}
+.app-btn-2.app-btn-danger {
+  background-color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.app-btn-2.app-btn-secondary {
+  color: var(--color-border-2);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-2);
+}
+
+.app-link {
+  color: var(--color-link);
+  font-size: 15px;
+  line-height: 21px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.app-checkbox {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.app-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.app-checkbox .checkmark {
+  position: relative;
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-color: var(--color-background);
+  border: 1px solid #707070;
+  border-radius: 2px;
+}
+.app-checkbox .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.app-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+.app-checkbox .checkmark:after {
+  left: 2px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: #ffa800;
+  border-radius: 2px;
+}
+
+.app-radio {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.app-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.app-radio .checkmark {
+  position: relative;
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-color: var(--color-background);
+  border: 1px solid #707070;
+  border-radius: 30px;
+}
+.app-radio .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.app-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+.app-radio .checkmark:after {
+  left: 2px;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: #ffa800;
+  border-radius: 24px;
+}
+
+.no-scrollbar {
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
