@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <Header>都道府県別の総人口推移グラフ</Header>
+  </div>
 </template>
 <script lang="ts">
 import { PopulationService } from '../services/PopulationService'
