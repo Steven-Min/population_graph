@@ -1,0 +1,29 @@
+// padding(2px ~ 50px, 2px区切りで)
+@for $i from 2 through 50 {
+  .p-#{$i} {
+    padding: #{$i}px;
+  }
+
+  .pt-#{$i} {
+      padding-top: #{$i}px;
+  }
+
+  .pr-#{$i} {
+      padding-right: #{$i}px;
+  }
+
+  .pb-#{$i} {
+      padding-bottom: #{$i}px;
+  }
+
+  .pl-#{$i} {
+      padding-left: #{$i}px;
+  }
+}
+
+// font-size (10px ~ 50px, 2px区切りで)
+@for $i from 10 through 50 {
+  .fs-#{$i} {
+    font-size: #{$i}px;
+  }
+}
