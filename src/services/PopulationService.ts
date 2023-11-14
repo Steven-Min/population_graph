@@ -1,25 +1,99 @@
 import axios from 'axios'
-import { RESAS_API_URL, API_KEY } from '../const'
-import type { PREFECTURE } from '../type'
+import { reactive, computed, toRefs } from 'vue'
+import {
+  RESAS_API_URL,
+  API_KEY,
+  singletonInstanceSummoner,
+  makeItReactive,
+  GRAPH_YEARS
+} from '../const'
+import type { PREFECTURE, POPULATION_DATA, GRAPH_DATASET } from '../type'
 
 /**
  * 人口データを取得するサービス
  */
 export class PopulationService {
-  public prefectures: PREFECTURE[] = []
-  public selectedPrefectures: string[] = []
-  public graphData: any = {}
+  private state = reactive({
+    initialized: false,
+    prefectures: [] as PREFECTURE[],
+    selectedPrefectures: [] as number[],
+    graphData: {} as any
+  })
 
   constructor() {
-    this._initData()
+    Object.assign(this, toRefs(this.state))
+  }
+
+  public async initialize() {
+    await this._initData()
   }
 
   private async _initData() {
-    const res = await axios.get(`${RESAS_API_URL}/api/v1/prefectures`, {
+    this.state.initialized = false
+    const res = await axios.get(`${RESAS_API_URL}/api/v1/prefectures `, {
       headers: {
         'X-API-KEY': API_KEY
       }
     })
-    this.prefectures = res.data.result
+    this.state.prefectures = res.data.result
+    this.state.initialized = true
+  }
+
+  /**
+   * 選択された都道府県を設定する
+   * @param prefCode 都道府県コード
+   */
+  public addPrefecture(prefCode: number) {
+    this.state.selectedPrefectures.push(prefCode)
+    this._fetchPopulationData()
+  }
+
+  /**
+   * 選択された都道府県を削除する
+   * @param prefCode 都道府県コード
+   */
+  public removePrefecture(prefCode: number) {
+    this.state.selectedPrefectures = this.state.selectedPrefectures.filter(
+      (pref) => pref !== prefCode
+    )
+    this._fetchPopulationData()
+  }
+
+  // selectedPrefecturesが変更されるタイミング毎に、人口データを取得する
+  private async _fetchPopulationData() {
+    await Promise.all(
+      this.state.selectedPrefectures.map(async (prefCode) => await this._fetchPopulation(prefCode))
+    )
+  }
+
+  private async _fetchPopulation(prefCode: number) {
+    const res = await axios.get(`${RESAS_API_URL}/api/v1/population/composition/perYear`, {
+      headers: {
+        'X-API-KEY': API_KEY
+      },
+      params: {
+        prefCode,
+        cityCode: '-'
+      }
+    })
+    this.state.graphData[prefCode] = res.data.result.data[0].data
+  }
+
+  get chartData() {
+    let labels = GRAPH_YEARS()
+    let datasets: GRAPH_DATASET[] = []
+    Object.keys(this.state.graphData).forEach((prefCode) => {
+      const detailGraphData = this.state.graphData[prefCode] as POPULATION_DATA[]
+      const prefectureData = {
+        label: this.state.prefectures.find((pref) => pref.prefCode === Number(prefCode))?.prefName,
+        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+        data: detailGraphData.map((data) => data.value)
+      } as GRAPH_DATASET
+      datasets.push(prefectureData)
+    })
+    return {
+      labels,
+      datasets
+    }
   }
 }
