@@ -25,6 +25,22 @@ export class PopulationService {
     Object.assign(this, toRefs(this.state))
   }
 
+  get initialized() {
+    return this.state.initialized
+  }
+
+  get prefectures() {
+    return this.state.prefectures
+  }
+
+  get selectedPrefectures() {
+    return this.state.selectedPrefectures
+  }
+
+  get graphData() {
+    return this.state.graphData
+  }
+
   public async initialize() {
     await this._initData()
   }
