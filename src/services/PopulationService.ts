@@ -17,7 +17,8 @@ export class PopulationService {
     initialized: false,
     prefectures: [] as PREFECTURE[],
     selectedPrefectures: [] as number[],
-    graphData: {} as any
+    graphData: {} as any,
+    currentType: '総人口' as string
   })
 
   constructor() {
@@ -76,14 +77,21 @@ export class PopulationService {
         cityCode: '-'
       }
     })
-    this.state.graphData[prefCode] = res.data.result.data[0].data
+    this.state.graphData[prefCode] = {
+      総人口: res.data.result.data[0].data,
+      年少人口: res.data.result.data[1].data,
+      生産年齢人口: res.data.result.data[2].data,
+      老年人口: res.data.result.data[3].data
+    }
   }
 
   get chartData() {
     let labels = GRAPH_YEARS()
     let datasets: GRAPH_DATASET[] = []
     Object.keys(this.state.graphData).forEach((prefCode) => {
-      const detailGraphData = this.state.graphData[prefCode] as POPULATION_DATA[]
+      const detailGraphData = this.state.graphData[prefCode][
+        this.state.currentType
+      ] as POPULATION_DATA[]
       const prefectureData = {
         label: this.state.prefectures.find((pref) => pref.prefCode === Number(prefCode))?.prefName,
         backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
@@ -95,5 +103,9 @@ export class PopulationService {
       labels,
       datasets
     }
+  }
+
+  changeType(type: string) {
+    this.state.currentType = type
   }
 }
