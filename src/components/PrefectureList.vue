@@ -1,7 +1,7 @@
 <template>
   <div class="p-2">
     <h2 class="fs-18">都道府県</h2>
-    <div class="prefecture-list" v-if="populationService.state.initialized">
+    <div class="prefecture-list" v-if="populationService.stateInitialized">
       <label class="prefecture-item" v-for="(item, index) in prefectures" :key="index">
         <input type="checkbox" @change="changePrefecture" :value="item.prefCode" />
         {{ item.prefName }}

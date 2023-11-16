@@ -1,7 +1,7 @@
 <template>
   <div style="height: 400px">
     <Line
-      v-if="populationService.state.initialized"
+      v-if="populationService.stateInitialized"
       :data="populationService.chartData"
       :options="chartOptions"
     />

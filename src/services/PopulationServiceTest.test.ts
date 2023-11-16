@@ -6,7 +6,7 @@ describe('PopulationService', () => {
 
   test('initialize', async () => {
     await populationService.initialize()
-    expect(populationService.initialized).toBe(true)
-    expect(populationService.prefectures.length).toBe(47)
+    expect(populationService.stateInitialized).toBe(true)
+    expect(populationService.statePrefectures.length).toBe(47)
   })
 })
